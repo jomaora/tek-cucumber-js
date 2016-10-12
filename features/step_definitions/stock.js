@@ -9,7 +9,7 @@ module.exports = function() {
         this.user = user;
     });
 
-    this.When(/^he add (\d+) units of (.*), item price: (.*)$/, (units, name, price) => {
+    this.When(/^he add (\d+) units of (.*), item price: (.*)\$$/, (units, name, price) => {
         const product = {units, name, price};
         stockLib.addProduct(this.user, product);
     });
@@ -22,5 +22,9 @@ module.exports = function() {
         const product = stockLib.getStock(productName);
         expect(product.units).to.be.eql(units);
     });
-    
+
+    this.Then(/^Stock should not contain (.*)/, function (productName) {
+        const product = stockLib.getStock(productName);
+        expect(product).to.be.undefined;
+    });
 };
