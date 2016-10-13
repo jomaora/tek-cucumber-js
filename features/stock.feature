@@ -11,3 +11,4 @@ Feature: Stock management
     Given User in session is Client
     When he add 1 units of Bananas, item price: 1.0$
     Then Stock should not contain Bananas
+    And An error Unauthorized should be thrown

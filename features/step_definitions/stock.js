@@ -5,26 +5,36 @@ const {expect} = require('chai');
 
 module.exports = function() {
 
-    this.Given(/^User in session is (.*)$/, (user) => {
+    this.Given(/^User in session is (.*)$/, function(user) {
         this.user = user;
     });
 
-    this.When(/^he add (\d+) units of (.*), item price: (.*)\$$/, (units, name, price) => {
+    this.When(/^he add (\d+) units of (.*), item price: (.*)\$$/, function(units, name, price) {
         const product = {units, name, price};
-        stockLib.addProduct(this.user, product);
+        try {
+            stockLib.addProduct(this.user, product);
+        }
+        catch (err) {
+            this.err = err;
+        }
     });
 
     this.Then(/^Stock is not empty$/, () => {
         expect(stockLib.getStock()).to.not.be.empty;
     });
 
-    this.Then(/^Stock contains (\d+) units of (.*)$/, (units, productName) => {
+    this.Then(/^Stock contains (\d+) units of (.*)$/, function(units, productName) {
         const product = stockLib.getStock(productName);
         expect(product.units).to.be.eql(units);
     });
 
-    this.Then(/^Stock should not contain (.*)/, function (productName) {
+    this.Then(/^Stock should not contain (.*)/, function(productName) {
         const product = stockLib.getStock(productName);
         expect(product).to.be.undefined;
+    });
+
+    this.Then(/^An error (.*) should be thrown$/, function(message) {
+        expect(this.err).to.not.be.undefined;
+        expect(this.err.message).to.be.eql(message);
     });
 };
