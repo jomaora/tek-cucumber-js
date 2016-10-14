@@ -9,7 +9,21 @@ module.exports = function() {
         this.user = user;
     });
 
+    this.Given(/^Usuario en sesión es (.*)$/, function(user) {
+        this.user = user;
+    });
+
     this.When(/^he add (\d+) units of (.*), item price: (.*)\$$/, function(units, name, price) {
+        const product = {units: parseInt(units), name, price: parseFloat(price)};
+        try {
+            stockLib.addProduct(this.user, product);
+        }
+        catch (err) {
+            this.err = err;
+        }
+    });
+
+    this.When(/^Él agrega (\d+) unidades de (.*), precio por item: (.*)\$$/, function(units, name, price) {
         const product = {units: parseInt(units), name, price: parseFloat(price)};
         try {
             stockLib.addProduct(this.user, product);
@@ -23,7 +37,16 @@ module.exports = function() {
         expect(stockLib.getStock()).to.not.be.empty;
     });
 
+    this.Then(/^El Stock no está vacío$/, () => {
+        expect(stockLib.getStock()).to.not.be.empty;
+    });
+
     this.Then(/^Stock contains (\d+) units of (.*)$/, function(units, productName) {
+        const product = stockLib.getStock(productName);
+        expect(product.units).to.be.eql(parseInt(units));
+    });
+
+    this.Then(/^El Stock contiene (\d+) unidades de (.*)$/, function(units, productName) {
         const product = stockLib.getStock(productName);
         expect(product.units).to.be.eql(parseInt(units));
     });
