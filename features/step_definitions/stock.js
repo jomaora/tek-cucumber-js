@@ -1,21 +1,26 @@
 'use strict';
 
+const stockLib = require('../../lib/stock');
+const {expect} = require('chai');
+
 module.exports = function() {
 
-    this.Given(/^User in session is Admin$/, (callback) => {
-        callback(null, 'pending');
+    this.Given(/^User in session is (.*)$/, (user) => {
+        this.user = user;
     });
 
-    this.When(/^he add (\d+) units of Tomatoes, item price: (\d+)\.(\d+)\$$/, (arg1, arg2, arg3, callback) => {
-        callback(null, 'pending');
+    this.When(/^he add (\d+) units of (.*), item price: (.*)$/, (units, name, price) => {
+        const product = {units, name, price};
+        stockLib.addProduct(this.user, product);
     });
 
-    this.Then(/^Stock is not empty$/, (callback) => {
-        callback(null, 'pending');
+    this.Then(/^Stock is not empty$/, () => {
+        expect(stockLib.getStock()).to.not.be.empty;
     });
 
-    this.Then(/^Stock contains (\d+) units of Tomatoes$/, (arg1, callback) => {
-        callback(null, 'pending');
+    this.Then(/^Stock contains (\d+) units of (.*)$/, (units, productName) => {
+        const product = stockLib.getStock(productName);
+        expect(product.units).to.be.eql(units);
     });
     
 };
