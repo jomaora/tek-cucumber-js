@@ -1,3 +1,5 @@
+@Client
+
 Feature: Buying products from stock
 
   Background:

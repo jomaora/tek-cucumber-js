@@ -1,3 +1,5 @@
+@Stock
+
 Feature: Stock management
   It can be only access by admin user
 
