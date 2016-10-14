@@ -9,14 +9,13 @@ Feature: Buying products from stock
       | Bananas  | 5     | 1     |
     And User in session is Client
 
-  Scenario: Client buy Tomatoes
-    Given User will give 20$ to pay
-    When User buy 4 units of Tomatoes
-    Then Stock contains 12 units of Tomatoes
-    And User should receive 2$ as change
+  Scenario Outline: Client buy Product
+    Given User will give <avaliableMoney>$ to pay
+    When User buy <quantity> units of <product>
+    Then Stock contains <stockQuantity> units of <product>
+    And User should receive <change>$ as change
 
-  Scenario: Client buy Bananas
-    Given User will give 10$ to pay
-    When User buy 4 units of Bananas
-    Then Stock contains 1 units of Bananas
-    And User should receive 6$ as change
+    Examples:
+    | avaliableMoney | quantity | product  | stockQuantity | change |
+    | 20             | 4        | Tomatoes | 16            | 12     |
+    | 10             | 4        | Bananas  | 1             | 6      |
