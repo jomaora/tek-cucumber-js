@@ -10,7 +10,7 @@ module.exports = function() {
     });
 
     this.When(/^he add (\d+) units of (.*), item price: (.*)\$$/, function(units, name, price) {
-        const product = {units, name, price};
+        const product = {units: parseInt(units), name, price: parseFloat(price)};
         try {
             stockLib.addProduct(this.user, product);
         }
@@ -25,7 +25,7 @@ module.exports = function() {
 
     this.Then(/^Stock contains (\d+) units of (.*)$/, function(units, productName) {
         const product = stockLib.getStock(productName);
-        expect(product.units).to.be.eql(units);
+        expect(product.units).to.be.eql(parseInt(units));
     });
 
     this.Then(/^Stock should not contain (.*)/, function(productName) {
