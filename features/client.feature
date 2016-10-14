@@ -3,8 +3,10 @@
 Feature: Buying products from stock
 
   Background:
-    Given The stock has 20 units of Tomatoes, item price 2$
-    Given The stock has 5 units of Bananas, item price 1$
+    Given A stock having
+      | name     | items | price |
+      | Tomatoes | 20    | 2     |
+      | Bananas  | 5     | 1     |
     And User in session is Client
 
   Scenario: Client buy Tomatoes

@@ -5,10 +5,12 @@ const {expect} = require('chai');
 
 module.exports = function() {
 
-	this.Given(/^The stock has (\d+) units of (.*), item price (.*)\$$/, function (units, name, price) {
-		const product = {units, name, price};
-		stockLib.addProduct('Admin', product);
-	});
+	this.Given(/^A stock having$/, function (table) {
+		table.rows().forEach(([name, units, price]) => {
+			const product = {units: parseInt(units), name, price: parseFloat(price)};
+			stockLib.addProduct('Admin', product);
+		});
+   	});
 
 	this.Given(/^User will give (\d+)\$ to pay$/, function (money) {
 		this.availableMoney = money;
