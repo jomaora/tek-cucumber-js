@@ -238,7 +238,7 @@ Feature: Buying products from stock
   Scenario: Client buy Tomatoes
     Given User will give 20$ to pay
     When User buy 4 units of Tomatoes
-    Then Stock contains 12 units of Tomatoes
+    Then Stock contains 16 units of Tomatoes
     And User should receive 2$ as change
 
   Scenario: Client buy Bananas
