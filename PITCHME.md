@@ -68,7 +68,6 @@ Features are described in *.feature files
 
 This files are normally found in a 'features' directory:
 - A Feature contains a list of scenarios: concrete example that illustrates a business rule.
-- Every scenario consists of a list of steps, which must start with one of the keywords Given, When, Then, But or And.
 
 #VSLIDE
 
@@ -80,7 +79,8 @@ Scenarios follow the same pattern:
 - Describe an event
 - Describe an expected outcome
 
-This is done with steps.
+Scenario workflow is described using steps, which must start with one of the keywords Given, When, Then, But or And.
+
 
 #VSLIDE
 
